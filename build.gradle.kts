@@ -96,12 +96,6 @@ tasks.named("compileJava") {
     dependsOn("openApiGenerate")
 }
 
-dependencyManagement {
-    imports {
-        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
-    }
-}
-
 tasks.named<Jar>("jar") {
     enabled = false
 }
