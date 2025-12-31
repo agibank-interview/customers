@@ -4,9 +4,6 @@ import br.com.agibank.customers.infrastructure.adapters.outbound.entities.types.
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-
 @Entity
 @Table(name = "ADDRESS")
 @Getter
@@ -14,7 +11,7 @@ import java.time.ZoneOffset;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AddressEntity {
+public class AddressEntity extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_seq")
@@ -51,23 +48,6 @@ public class AddressEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false)
     private CustomerEntity customer;
-
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private OffsetDateTime createdAt;
-
-    @Column(name = "updated_at", nullable = false)
-    private OffsetDateTime updatedAt;
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = OffsetDateTime.now(ZoneOffset.UTC);
-        updatedAt = OffsetDateTime.now(ZoneOffset.UTC);
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = OffsetDateTime.now(ZoneOffset.UTC);
-    }
 
     @Override
     public boolean equals(final Object o) {

@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
@@ -18,7 +18,7 @@ import static com.fasterxml.jackson.datatype.jsr310.ser.OffsetDateTimeSerializer
 public class JacksonDateTimeFormatConfig {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER =
-            DateTimeFormatter.ofPattern("dd-MM-yyyy'T'HH:mm:ssXXX").withZone(ZoneOffset.UTC);
+            DateTimeFormatter.ofPattern("dd-MM-yyyy'T'HH:mm:ssXXX").withZone(ZoneId.of("America/Sao_Paulo"));
 
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
