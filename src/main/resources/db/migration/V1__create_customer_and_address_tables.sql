@@ -6,13 +6,11 @@ CREATE TABLE CUSTOMER (
     id         BIGINT  PRIMARY KEY DEFAULT nextval('customer_id_seq'),
     name       VARCHAR(255) NOT NULL,
     birth_date DATE NOT NULL,
-    cpf        VARCHAR(11)  NOT NULL,
-    email      VARCHAR(255) NOT NULL,
+    cpf        VARCHAR(11)  UNIQUE NOT NULL,
+    email      VARCHAR(255) UNIQUE NOT NULL,
     phone      VARCHAR(20)  NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT uk_customer_cpf UNIQUE (cpf),
-    CONSTRAINT uk_customer_email UNIQUE (email)
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Sequence para tabela de Endereços
