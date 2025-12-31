@@ -34,7 +34,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-api:3.0.0")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
 
     implementation("org.openapitools:jackson-databind-nullable:0.2.6")
 
