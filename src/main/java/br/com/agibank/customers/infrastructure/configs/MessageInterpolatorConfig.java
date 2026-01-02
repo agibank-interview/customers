@@ -1,6 +1,6 @@
 package br.com.agibank.customers.infrastructure.configs;
 
-import br.com.agibank.customers.application.exceptions.handler.MessageExceptionInterpolator;
+import br.com.agibank.customers.infrastructure.exceptions.handler.MessageExceptionInterpolator;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import org.springframework.context.MessageSource;

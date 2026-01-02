@@ -1,4 +1,4 @@
-package br.com.agibank.customers.application.exceptions.handler;
+package br.com.agibank.customers.infrastructure.exceptions.handler;
 
 
 import br.com.agibank.customers.api.v1.model.ErrorResponseDTO;
@@ -137,8 +137,9 @@ public class GlobalExceptionHandler {
                                                                 final Exception exception,
                                                                 final HttpStatus status) {
         log.error(message, exception);
-        final ErrorResponseDTO errorResponse = new ErrorResponseDTO().message(message);
-        errorResponse.setDetails(details);
-        return new ResponseEntity<>(errorResponse, status);
+        return new ResponseEntity<>(new ErrorResponseDTO()
+                .message(message)
+                .details(details),
+                status);
     }
 }

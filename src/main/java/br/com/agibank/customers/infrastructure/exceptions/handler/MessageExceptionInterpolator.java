@@ -1,4 +1,4 @@
-package br.com.agibank.customers.application.exceptions.handler;
+package br.com.agibank.customers.infrastructure.exceptions.handler;
 
 import jakarta.validation.MessageInterpolator;
 import jakarta.validation.Path;
