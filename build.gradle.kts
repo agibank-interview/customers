@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "br.com.agibank.customers"
-version = "0.0.1-SNAPSHOT"
+version = "1.0.0"
 description = "Customer management API"
 
 java {
@@ -38,6 +38,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     implementation("io.micrometer:micrometer-tracing-bridge-brave")
+    implementation("io.github.openfeign:feign-micrometer:13.5")
     implementation("org.openapitools:jackson-databind-nullable:0.2.6")
 
     implementation("org.flywaydb:flyway-core")
