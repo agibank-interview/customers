@@ -6,7 +6,7 @@ info:
   version: 1.0.0
 
 servers:
-  - url: 'http://localhost:8080/customers-service/api/v1'
+  - url: 'http://localhost:8080/api/v1'
     description: 'Local Server'
 
 paths:
@@ -30,13 +30,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/CustomerResponse'
         '400':
-          description: 'Invalid request'
+          description: 'Invalid request data'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '409':
-          description: 'Customer with cpf/email already registered'
+          description: 'Customer with cpf or email already registered'
           content:
             application/json:
               schema:
@@ -216,7 +216,7 @@ components:
       name: customerId
       in: path
       required: true
-      description: 'Customer identification'
+      description: 'Customer identifier'
       schema:
         $ref: '#/components/schemas/CustomerId'
 
@@ -224,7 +224,7 @@ components:
       name: addressId
       in: path
       required: true
-      description: 'Address identification'
+      description: 'Address identifier'
       schema:
         $ref: '#/components/schemas/AddressId'
 
@@ -233,7 +233,7 @@ components:
       type: integer
       format: int64
       example: 12345
-      description: 'Customer identification'
+      description: 'Customer identifier'
 
     CustomerName:
       type: string
@@ -273,7 +273,7 @@ components:
       type: integer
       format: int64
       example: 5733
-      description: 'Address identification'
+      description: 'Address identifier'
 
     AddressStreet:
       type: string
