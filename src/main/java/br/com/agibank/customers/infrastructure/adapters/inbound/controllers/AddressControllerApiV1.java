@@ -3,7 +3,7 @@ package br.com.agibank.customers.infrastructure.adapters.inbound.controllers;
 import br.com.agibank.customers.api.v1.AddressApiV1;
 import br.com.agibank.customers.api.v1.model.AddressResponseDTO;
 import br.com.agibank.customers.api.v1.model.UpdateAddressRequestDTO;
-import br.com.agibank.customers.application.useCases.address.UpdateAddressByIdUseCase;
+import br.com.agibank.customers.application.usecases.address.UpdateAddressByIdUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,10 +1,10 @@
-package br.com.agibank.customers.application.useCases.customer.impl;
+package br.com.agibank.customers.application.usecases.customer.impl;
 
 import br.com.agibank.customers.api.v1.model.CustomerRequestDTO;
 import br.com.agibank.customers.api.v1.model.CustomerResponseDTO;
 import br.com.agibank.customers.application.exceptions.CpfAlreadyInUseException;
 import br.com.agibank.customers.application.exceptions.EmailAlreadyInUseException;
-import br.com.agibank.customers.application.useCases.customer.CreateCustomerUseCase;
+import br.com.agibank.customers.application.usecases.customer.CreateCustomerUseCase;
 import br.com.agibank.customers.infrastructure.adapters.outbound.entities.CustomerEntity;
 import br.com.agibank.customers.infrastructure.adapters.outbound.repositories.CustomerRepository;
 import br.com.agibank.customers.infrastructure.mappers.CustomerMapper;

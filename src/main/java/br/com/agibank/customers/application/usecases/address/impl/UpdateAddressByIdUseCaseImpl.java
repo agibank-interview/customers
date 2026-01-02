@@ -1,9 +1,9 @@
-package br.com.agibank.customers.application.useCases.address.impl;
+package br.com.agibank.customers.application.usecases.address.impl;
 
 import br.com.agibank.customers.api.v1.model.AddressResponseDTO;
 import br.com.agibank.customers.api.v1.model.UpdateAddressRequestDTO;
 import br.com.agibank.customers.application.exceptions.AddressNotFoundException;
-import br.com.agibank.customers.application.useCases.address.UpdateAddressByIdUseCase;
+import br.com.agibank.customers.application.usecases.address.UpdateAddressByIdUseCase;
 import br.com.agibank.customers.infrastructure.adapters.outbound.entities.AddressEntity;
 import br.com.agibank.customers.infrastructure.adapters.outbound.repositories.AddressRepository;
 import br.com.agibank.customers.infrastructure.mappers.AddressMapper;

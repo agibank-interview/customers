@@ -1,4 +1,4 @@
-package br.com.agibank.customers.application.useCases.address.impl;
+package br.com.agibank.customers.application.usecases.address.impl;
 
 import br.com.agibank.customers.api.v1.model.AddressResponseDTO;
 import br.com.agibank.customers.api.v1.model.UpdateAddressRequestDTO;

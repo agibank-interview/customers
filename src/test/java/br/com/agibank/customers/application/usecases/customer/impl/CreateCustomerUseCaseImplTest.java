@@ -1,4 +1,4 @@
-package br.com.agibank.customers.application.useCases.customer.impl;
+package br.com.agibank.customers.application.usecases.customer.impl;
 
 import br.com.agibank.customers.api.v1.model.CustomerRequestDTO;
 import br.com.agibank.customers.api.v1.model.CustomerResponseDTO;

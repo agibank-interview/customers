@@ -2,10 +2,10 @@ package br.com.agibank.customers.infrastructure.adapters.inbound.controllers;
 
 import br.com.agibank.customers.api.v1.CustomerApiV1;
 import br.com.agibank.customers.api.v1.model.*;
-import br.com.agibank.customers.application.useCases.customer.CreateCustomerUseCase;
-import br.com.agibank.customers.application.useCases.customer.FindAllCustomersUseCase;
-import br.com.agibank.customers.application.useCases.customer.FindCustomerByIdUseCase;
-import br.com.agibank.customers.application.useCases.customer.UpdateCustomerByIdUseCase;
+import br.com.agibank.customers.application.usecases.customer.CreateCustomerUseCase;
+import br.com.agibank.customers.application.usecases.customer.FindAllCustomersUseCase;
+import br.com.agibank.customers.application.usecases.customer.FindCustomerByIdUseCase;
+import br.com.agibank.customers.application.usecases.customer.UpdateCustomerByIdUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;

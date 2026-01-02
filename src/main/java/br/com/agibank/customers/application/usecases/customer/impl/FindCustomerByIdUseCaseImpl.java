@@ -1,8 +1,8 @@
-package br.com.agibank.customers.application.useCases.customer.impl;
+package br.com.agibank.customers.application.usecases.customer.impl;
 
 import br.com.agibank.customers.api.v1.model.CustomerResponseDTO;
 import br.com.agibank.customers.application.exceptions.CustomerNotFoundException;
-import br.com.agibank.customers.application.useCases.customer.FindCustomerByIdUseCase;
+import br.com.agibank.customers.application.usecases.customer.FindCustomerByIdUseCase;
 import br.com.agibank.customers.infrastructure.adapters.outbound.repositories.CustomerRepository;
 import br.com.agibank.customers.infrastructure.mappers.CustomerMapper;
 import lombok.RequiredArgsConstructor;

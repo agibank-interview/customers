@@ -1,7 +1,7 @@
-package br.com.agibank.customers.application.useCases.customer.impl;
+package br.com.agibank.customers.application.usecases.customer.impl;
 
 import br.com.agibank.customers.api.v1.model.PagedCustomerResponseDTO;
-import br.com.agibank.customers.application.useCases.customer.FindAllCustomersUseCase;
+import br.com.agibank.customers.application.usecases.customer.FindAllCustomersUseCase;
 import br.com.agibank.customers.infrastructure.adapters.outbound.repositories.CustomerRepository;
 import br.com.agibank.customers.infrastructure.mappers.CustomerMapper;
 import lombok.RequiredArgsConstructor;
