@@ -1,6 +1,6 @@
 package br.com.agibank.customers.infrastructure.adapters.outbound.entities;
 
-import br.com.agibank.customers.infrastructure.adapters.outbound.entities.types.AddressType;
+import br.com.agibank.customers.application.domain.model.AddressType;
 import jakarta.persistence.*;
 import lombok.*;
 
