@@ -8,9 +8,11 @@ import br.com.agibank.customers.infrastructure.adapters.outbound.entities.Addres
 import br.com.agibank.customers.infrastructure.adapters.outbound.repositories.AddressRepository;
 import br.com.agibank.customers.infrastructure.mappers.AddressMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UpdateAddressByIdUseCaseImpl implements UpdateAddressByIdUseCase {
@@ -22,6 +24,7 @@ public class UpdateAddressByIdUseCaseImpl implements UpdateAddressByIdUseCase {
     @Transactional
     public AddressResponseDTO execute(final Long addressId,
                                       final UpdateAddressRequestDTO updateAddressRequestDTO) {
+        log.info("Updating address with id: {}", addressId);
         final AddressEntity addressEntity =
                 addressRepository.findById(addressId).orElseThrow(() -> new AddressNotFoundException(addressId));
         addressMapper.fromUpdateAddressRequestDTO(updateAddressRequestDTO, addressEntity);

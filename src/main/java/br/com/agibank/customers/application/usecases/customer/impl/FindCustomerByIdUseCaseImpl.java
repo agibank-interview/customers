@@ -6,9 +6,11 @@ import br.com.agibank.customers.application.usecases.customer.FindCustomerByIdUs
 import br.com.agibank.customers.infrastructure.adapters.outbound.repositories.CustomerRepository;
 import br.com.agibank.customers.infrastructure.mappers.CustomerMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FindCustomerByIdUseCaseImpl implements FindCustomerByIdUseCase {
@@ -19,6 +21,7 @@ public class FindCustomerByIdUseCaseImpl implements FindCustomerByIdUseCase {
     @Override
     @Transactional(readOnly = true)
     public CustomerResponseDTO execute(final Long customerId) {
+        log.info("Finding customer with id: {}", customerId);
         return customerMapper.toCustomerResponseDTO(customerRepository.findWithAddressesById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException(customerId)));
     }

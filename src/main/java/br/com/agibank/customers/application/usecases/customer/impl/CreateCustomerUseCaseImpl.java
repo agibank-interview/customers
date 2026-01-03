@@ -9,9 +9,11 @@ import br.com.agibank.customers.infrastructure.adapters.outbound.entities.Custom
 import br.com.agibank.customers.infrastructure.adapters.outbound.repositories.CustomerRepository;
 import br.com.agibank.customers.infrastructure.mappers.CustomerMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CreateCustomerUseCaseImpl implements CreateCustomerUseCase {
@@ -22,6 +24,7 @@ public class CreateCustomerUseCaseImpl implements CreateCustomerUseCase {
     @Override
     @Transactional
     public CustomerResponseDTO execute(final CustomerRequestDTO customerRequestDTO) {
+        log.info("Creating customer");
         if (customerRepository.existsByCpf(customerRequestDTO.getCpf())) {
             throw new CpfAlreadyInUseException(customerRequestDTO.getCpf());
         }

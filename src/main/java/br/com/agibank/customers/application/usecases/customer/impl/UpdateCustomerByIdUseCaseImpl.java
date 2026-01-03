@@ -9,11 +9,13 @@ import br.com.agibank.customers.infrastructure.adapters.outbound.entities.Custom
 import br.com.agibank.customers.infrastructure.adapters.outbound.repositories.CustomerRepository;
 import br.com.agibank.customers.infrastructure.mappers.CustomerMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UpdateCustomerByIdUseCaseImpl implements UpdateCustomerByIdUseCase {
@@ -25,6 +27,8 @@ public class UpdateCustomerByIdUseCaseImpl implements UpdateCustomerByIdUseCase 
     @Transactional
     public UpdateCustomerResponseDTO execute(final Long customerId,
                                              final UpdateCustomerRequestDTO updateCustomerRequestDTO) {
+        log.info("Updating customer with id: {}", customerId);
+
         final CustomerEntity customerEntity = customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException(customerId));
         Optional.ofNullable(updateCustomerRequestDTO.getEmail())
