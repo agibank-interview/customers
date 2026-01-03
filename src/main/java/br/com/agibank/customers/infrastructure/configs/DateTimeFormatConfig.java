@@ -1,4 +1,4 @@
-package br.com.agibank.customers.infrastructure.configs; // Ou o pacote de configuração do seu projeto
+package br.com.agibank.customers.infrastructure.configs;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -18,7 +18,7 @@ import static com.fasterxml.jackson.datatype.jsr310.ser.OffsetDateTimeSerializer
 @Configuration
 public class DateTimeFormatConfig {
 
-    private static final String DATE_TIME_FORMAT = "dd-MM-yyyy'T'HH:mm:ssXXX";
+    private static final String DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssXXX";
 
     @Value("${app.business-timezone}")
     private String businessTimezone;
