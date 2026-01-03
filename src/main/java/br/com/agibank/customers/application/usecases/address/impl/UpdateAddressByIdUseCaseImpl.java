@@ -9,6 +9,7 @@ import br.com.agibank.customers.infrastructure.adapters.outbound.repositories.Ad
 import br.com.agibank.customers.infrastructure.mappers.AddressMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +19,7 @@ public class UpdateAddressByIdUseCaseImpl implements UpdateAddressByIdUseCase {
     private final AddressMapper addressMapper;
 
     @Override
+    @Transactional
     public AddressResponseDTO execute(final Long addressId,
                                       final UpdateAddressRequestDTO updateAddressRequestDTO) {
         final AddressEntity addressEntity =
