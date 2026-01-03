@@ -46,3 +46,6 @@ management:
     endpoint:
       health:
         show-details: always
+
+app:
+  business-timezone: "America/Sao_Paulo"
