@@ -41,25 +41,17 @@ Para executar a aplicação localmente (assumindo que o banco de dados já estej
 
 > **Nota:** Existe um projeto auxiliar responsável por orquestrar a infraestrutura local (banco de dados, etc.) via Docker Compose. Consulte a documentação desse projeto para subir o ambiente completo.
 
-## 📚 Documentação da API
+## 🏗️ Estrutura do Projeto
 
-A documentação da API é gerada automaticamente via OpenAPI.
+O projeto segue uma arquitetura em camadas (Clean Architecture/Hexagonal simplificada):
 
-*   **Swagger UI**: Acesse `http://localhost:8080/swagger-ui/index.html` (quando a aplicação estiver rodando) para visualizar e testar os endpoints.
-*   **Especificação YAML**: O contrato da API está definido em `src/main/resources/spec/customer_management_api-v1.yaml`.
-
-### Endpoints Principais
-
-#### Clientes (`/customers`)
-
-*   `POST /customers`: Cria um novo cliente.
-*   `GET /customers`: Lista clientes de forma paginada.
-*   `GET /customers/{customerId}`: Busca um cliente pelo ID.
-*   `PATCH /customers/{customerId}`: Atualiza parcialmente um cliente pelo ID.
-
-#### Endereços (`/addresses`)
-
-*   `PATCH /addresses/{addressId}`: Atualiza parcialmente um endereço pelo ID.
+*   `api`: Contratos e DTOs gerados pelo OpenAPI.
+*   `application`: Casos de uso (regras de negócio) e exceções.
+*   `infrastructure`:
+    *   `adapters/inbound`: Controladores REST.
+    *   `adapters/outbound`: Entidades JPA e Repositórios.
+    *   `mappers`: Conversores de objetos.
+    *   `configs`: Configurações do Spring.
 
 ## 📝 Notas Técnicas
 
@@ -85,14 +77,22 @@ Para executar os testes unitários:
 ./gradlew test
 ```
 
-## 🏗️ Estrutura do Projeto
+## 📚 Documentação da API
 
-O projeto segue uma arquitetura em camadas (Clean Architecture/Hexagonal simplificada):
+A documentação da API é gerada automaticamente via OpenAPI.
 
-*   `api`: Contratos e DTOs gerados pelo OpenAPI.
-*   `application`: Casos de uso (regras de negócio) e exceções.
-*   `infrastructure`:
-    *   `adapters/inbound`: Controladores REST.
-    *   `adapters/outbound`: Entidades JPA e Repositórios.
-    *   `mappers`: Conversores de objetos.
-    *   `configs`: Configurações do Spring.
+*   **Swagger UI**: Acesse `http://localhost:8080/swagger-ui/index.html` (quando a aplicação estiver rodando) para visualizar e testar os endpoints.
+*   **Especificação YAML**: O contrato da API está definido em `src/main/resources/spec/customer_management_api-v1.yaml`.
+
+### Endpoints Principais
+
+#### Clientes (`/customers`)
+
+*   `POST /customers`: Cria um novo cliente.
+*   `GET /customers`: Lista clientes de forma paginada.
+*   `GET /customers/{customerId}`: Busca um cliente pelo ID.
+*   `PATCH /customers/{customerId}`: Atualiza parcialmente um cliente pelo ID.
+
+#### Endereços (`/addresses`)
+
+*   `PATCH /addresses/{addressId}`: Atualiza parcialmente um endereço pelo ID.
