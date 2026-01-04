@@ -174,7 +174,7 @@ paths:
     patch:
       tags:
         - Address
-      summary: 'Updates a Address by Id'
+      summary: 'Partially update a Address by Id'
       operationId: updateAddressById
       parameters:
         - $ref: '#/components/parameters/AddressIdParam'
