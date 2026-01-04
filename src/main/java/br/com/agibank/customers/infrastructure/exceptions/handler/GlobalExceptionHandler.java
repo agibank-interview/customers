@@ -37,6 +37,7 @@ public class GlobalExceptionHandler {
     private static final String PARAMETER_NOT_PRESENT_ERROR_MESSAGE = "Required request parameter '%s' is not present";
     private static final String TYPE_MISMATCH_FOR_PROPERTY_ERROR_MESSAGE = "Value '%s' mismatched for property type '%s'";
     private static final String INVALID_REQUEST_PARAMETERS = "Invalid request parameters";
+    private static final String RESOURCE_NOT_FOUND_MESSAGE = "Resource not found";
 
     @ExceptionHandler(BusinessConflictException.class)
     public ResponseEntity<ErrorResponseDTO> handleBusinessConflictException(final BusinessConflictException exception) {
@@ -49,7 +50,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponseDTO> handleResourceNotFoundException(final ResourceNotFoundException exception) {
-        return buildErrorResponse(PROCESSING_REQUEST_ERROR_MESSAGE,
+        return buildErrorResponse(RESOURCE_NOT_FOUND_MESSAGE,
                 of(exception.getMessage()),
                 exception,
                 exception.getHttpStatus());
