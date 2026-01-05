@@ -76,7 +76,7 @@ As migrações estão localizadas em `src/main/resources/db/migration`.
 Para executar os testes unitários:
 
 ```bash
-./gradlew test
+./gradlew clean test
 ```
 
 ## 📚 Documentação da API
