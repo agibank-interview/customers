@@ -16,6 +16,7 @@ Este projeto é uma API RESTful desenvolvida em Java com Spring Boot para gerenc
 *   **Gradle**: Ferramenta de automação de build.
 *   **MapStruct**: Mapeamento de objetos (DTO <-> Entity).
 *   **Lombok**: Redução de código boilerplate.
+*   **Resilience4j**: Biblioteca de tolerância a falhas (Rate Limiter).
 *   **JUnit 5 & Mockito**: Testes unitários.
 
 ## 🛠️ Configuração e Execução
