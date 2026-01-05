@@ -37,6 +37,7 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
+    implementation("io.github.resilience4j:resilience4j-spring-boot3:2.2.0")
     implementation("io.micrometer:micrometer-tracing-bridge-brave")
     implementation("org.openapitools:jackson-databind-nullable:0.2.6")
 

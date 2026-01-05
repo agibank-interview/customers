@@ -58,6 +58,7 @@ O projeto segue uma arquitetura em camadas (Clean Architecture/Hexagonal simplif
 *   **Virtual Threads**: O projeto está configurado para utilizar Virtual Threads (Java 21+), proporcionando alta escalabilidade para operações de I/O.
 *   **Performance de Banco de Dados**: O Hibernate está configurado para realizar *batch inserts* e *updates*, otimizando a performance em operações de escrita em lote.
 *   **Distributed Tracing**: A aplicação suporta rastreamento distribuído, propagando e mantendo o `traceId` recebido de clientes (ex: `insurance-service`) para facilitar a observabilidade e debug em arquiteturas de microsserviços.
+*   **Rate Limiter**: Controle de vazão da API, limitando em 50 RPS para operações de leitura (com fail-fast) e 10 RPS para operações de escrita com janela de espera de 2s, retornando HTTP 429.
 
 ## 🗄️ Banco de Dados
 

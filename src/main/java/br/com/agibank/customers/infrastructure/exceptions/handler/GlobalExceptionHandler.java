@@ -4,6 +4,7 @@ package br.com.agibank.customers.infrastructure.exceptions.handler;
 import br.com.agibank.customers.api.v1.model.ErrorResponseDTO;
 import br.com.agibank.customers.application.exceptions.BusinessConflictException;
 import br.com.agibank.customers.application.exceptions.ResourceNotFoundException;
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -24,8 +25,7 @@ import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 import static java.util.Set.of;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.*;
 
 @Slf4j
 @RestControllerAdvice
@@ -33,11 +33,13 @@ public class GlobalExceptionHandler {
 
     private static final String GENERIC_VALIDATION_ERROR_MESSAGE = "The payload contains validation errors";
     private static final String PROCESSING_REQUEST_ERROR_MESSAGE = "Error processing request";
-    private static final String DATA_CONVERSION_ERROR_MESSAGE = "Some data conversion error occurred. Check if the payload data matches the expected types.";
-    private static final String PARAMETER_NOT_PRESENT_ERROR_MESSAGE = "Required request parameter '%s' is not present";
-    private static final String TYPE_MISMATCH_FOR_PROPERTY_ERROR_MESSAGE = "Value '%s' mismatched for property type '%s'";
-    private static final String INVALID_REQUEST_PARAMETERS = "Invalid request parameters";
-    private static final String RESOURCE_NOT_FOUND_MESSAGE = "Resource not found";
+    private static final String DATA_CONVERSION_ERROR_MESSAGE_DESCRIPTION = "Some data conversion error occurred. Check if the payload data matches the expected types.";
+    private static final String PARAMETER_NOT_PRESENT_ERROR_MESSAGE_DESCRIPTION = "Required request parameter '%s' is not present";
+    private static final String TYPE_MISMATCH_FOR_PROPERTY_ERROR_MESSAGE_DESCRIPTION = "Value '%s' mismatched for property type '%s'";
+    private static final String INVALID_REQUEST_PARAMETERS_ERROR_MESSAGE = "Invalid request parameters";
+    private static final String RESOURCE_NOT_FOUND_ERROR_MESSAGE = "Resource not found";
+    private static final String TOO_MANY_REQUESTS_ERROR_MESSAGE = "To Many Requests";
+    private static final String TOO_MANY_REQUESTS_ERROR_MESSAGE_DESCRIPTION = "Rate limit exceeded. Please try again later.";
 
     @ExceptionHandler(BusinessConflictException.class)
     public ResponseEntity<ErrorResponseDTO> handleBusinessConflictException(final BusinessConflictException exception) {
@@ -50,10 +52,19 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponseDTO> handleResourceNotFoundException(final ResourceNotFoundException exception) {
-        return buildErrorResponse(RESOURCE_NOT_FOUND_MESSAGE,
+        return buildErrorResponse(RESOURCE_NOT_FOUND_ERROR_MESSAGE,
                 of(exception.getMessage()),
                 exception,
                 exception.getHttpStatus());
+    }
+
+    @ExceptionHandler(RequestNotPermitted.class)
+    public ResponseEntity<ErrorResponseDTO> handleRequestNotPermitted(final RequestNotPermitted exception) {
+        return buildErrorResponse(
+                TOO_MANY_REQUESTS_ERROR_MESSAGE,
+                of(TOO_MANY_REQUESTS_ERROR_MESSAGE_DESCRIPTION),
+                exception,
+                TOO_MANY_REQUESTS);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -73,7 +84,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponseDTO> handleHttpMessageNotReadableException(final HttpMessageNotReadableException exception) {
         final Set<String> details = new LinkedHashSet<>();
-        details.add(DATA_CONVERSION_ERROR_MESSAGE);
+        details.add(DATA_CONVERSION_ERROR_MESSAGE_DESCRIPTION);
         details.add(exception.getMessage());
         return buildErrorResponse(
                 GENERIC_VALIDATION_ERROR_MESSAGE,
@@ -86,7 +97,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDTO> handleMissingServletRequestParameterException(final MissingServletRequestParameterException exception) {
         return buildErrorResponse(
                 GENERIC_VALIDATION_ERROR_MESSAGE,
-                of(format(PARAMETER_NOT_PRESENT_ERROR_MESSAGE, exception.getParameterName())),
+                of(format(PARAMETER_NOT_PRESENT_ERROR_MESSAGE_DESCRIPTION, exception.getParameterName())),
                 exception,
                 BAD_REQUEST);
     }
@@ -94,9 +105,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorResponseDTO> handleMethodArgumentTypeMismatchException(final MethodArgumentTypeMismatchException exception) {
         return buildErrorResponse(
-                INVALID_REQUEST_PARAMETERS,
+                INVALID_REQUEST_PARAMETERS_ERROR_MESSAGE,
                 of(format(
-                        TYPE_MISMATCH_FOR_PROPERTY_ERROR_MESSAGE,
+                        TYPE_MISMATCH_FOR_PROPERTY_ERROR_MESSAGE_DESCRIPTION,
                         exception.getValue(),
                         exception.getPropertyName())),
                 exception,
@@ -109,7 +120,7 @@ public class GlobalExceptionHandler {
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.toSet());
         return buildErrorResponse(
-                INVALID_REQUEST_PARAMETERS,
+                INVALID_REQUEST_PARAMETERS_ERROR_MESSAGE,
                 details,
                 exception,
                 BAD_REQUEST);
