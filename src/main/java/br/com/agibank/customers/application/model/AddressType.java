@@ -1,4 +1,4 @@
-package br.com.agibank.customers.application.domain.model;
+package br.com.agibank.customers.application.model;
 
 public enum AddressType {
     RESIDENCIAL, COMERCIAL, OUTRO;
