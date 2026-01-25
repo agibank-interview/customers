@@ -39,6 +39,9 @@ public class UpdateCustomerByIdUseCaseImpl implements UpdateCustomerByIdUseCase 
                     }
                 });
         customerMapper.fromUpdateCustomerRequestDTO(updateCustomerRequestDTO, customerEntity);
-        return customerMapper.toUpdateCustomerResponseDTO(customerRepository.save(customerEntity));
+        final UpdateCustomerResponseDTO response = customerMapper.toUpdateCustomerResponseDTO(customerRepository.save(customerEntity));
+
+        log.info("Customer updated with id: {}", customerId);
+        return response;
     }
 }
