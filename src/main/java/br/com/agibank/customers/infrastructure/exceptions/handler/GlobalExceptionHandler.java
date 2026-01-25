@@ -4,6 +4,7 @@ package br.com.agibank.customers.infrastructure.exceptions.handler;
 import br.com.agibank.customers.api.v1.model.ErrorResponseDTO;
 import br.com.agibank.customers.application.exceptions.BusinessConflictException;
 import br.com.agibank.customers.application.exceptions.ResourceNotFoundException;
+import io.github.resilience4j.bulkhead.BulkheadFullException;
 import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -40,6 +41,8 @@ public class GlobalExceptionHandler {
     private static final String RESOURCE_NOT_FOUND_ERROR_MESSAGE = "Resource not found";
     private static final String TOO_MANY_REQUESTS_ERROR_MESSAGE = "To Many Requests";
     private static final String TOO_MANY_REQUESTS_ERROR_MESSAGE_DESCRIPTION = "Rate limit exceeded. Please try again later.";
+    private static final String SERVICE_UNAVAILABLE_REQUESTS_ERROR_MESSAGE = "Service Unavailable";
+    private static final String SERVICE_UNAVAILABLE_REQUESTS_ERROR_MESSAGE_DESCRIPTION = "Server is currently under high load. Concurrency limit reached.";
 
     @ExceptionHandler(BusinessConflictException.class)
     public ResponseEntity<ErrorResponseDTO> handleBusinessConflictException(final BusinessConflictException exception) {
@@ -56,6 +59,15 @@ public class GlobalExceptionHandler {
                 of(exception.getMessage()),
                 exception,
                 exception.getHttpStatus());
+    }
+
+    @ExceptionHandler(BulkheadFullException.class)
+    public ResponseEntity<ErrorResponseDTO> handleBulkheadFullException(final BulkheadFullException exception) {
+        return buildErrorResponse(
+                SERVICE_UNAVAILABLE_REQUESTS_ERROR_MESSAGE,
+                of(SERVICE_UNAVAILABLE_REQUESTS_ERROR_MESSAGE_DESCRIPTION),
+                exception,
+                SERVICE_UNAVAILABLE);
     }
 
     @ExceptionHandler(RequestNotPermitted.class)

@@ -6,6 +6,7 @@ import br.com.agibank.customers.application.usecases.customer.CreateCustomerUseC
 import br.com.agibank.customers.application.usecases.customer.FindAllCustomersUseCase;
 import br.com.agibank.customers.application.usecases.customer.FindCustomerByIdUseCase;
 import br.com.agibank.customers.application.usecases.customer.UpdateCustomerByIdUseCase;
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,12 +30,14 @@ public class CustomerControllerApiV1 implements CustomerApiV1 {
 
     @Override
     @RateLimiter(name = CUSTOMERS_WRITE)
+    @Bulkhead(name = CUSTOMERS_WRITE)
     public ResponseEntity<CustomerResponseDTO> createCustomer(final CustomerRequestDTO customerRequestDTO) {
         return ResponseEntity.status(CREATED).body(createCustomerUseCase.execute(customerRequestDTO));
     }
 
     @Override
     @RateLimiter(name = CUSTOMERS_READ)
+    @Bulkhead(name = CUSTOMERS_READ)
     public ResponseEntity<PagedCustomerResponseDTO> findAllCustomers(final Integer page,
                                                                      final Integer size,
                                                                      final String sort) {
@@ -43,12 +46,14 @@ public class CustomerControllerApiV1 implements CustomerApiV1 {
 
     @Override
     @RateLimiter(name = CUSTOMERS_READ)
+    @Bulkhead(name = CUSTOMERS_READ)
     public ResponseEntity<CustomerResponseDTO> findCustomerById(final Long customerId) {
         return ResponseEntity.ok(findCustomerByIdUseCase.execute(customerId));
     }
 
     @Override
     @RateLimiter(name = CUSTOMERS_WRITE)
+    @Bulkhead(name = CUSTOMERS_WRITE)
     public ResponseEntity<UpdateCustomerResponseDTO> updateCustomerById(final Long customerId,
                                                                         final UpdateCustomerRequestDTO updateCustomerRequestDTO) {
         return ResponseEntity.ok(updateCustomerByIdUseCase.execute(customerId, updateCustomerRequestDTO));

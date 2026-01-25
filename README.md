@@ -16,7 +16,7 @@ Este projeto é uma API RESTful desenvolvida em Java com Spring Boot para gerenc
 *   **Gradle**: Ferramenta de automação de build.
 *   **MapStruct**: Mapeamento de objetos (DTO <-> Entity).
 *   **Lombok**: Redução de código boilerplate.
-*   **Resilience4j**: Biblioteca de tolerância a falhas (Rate Limiter).
+*   **Resilience4j**: Biblioteca de tolerância a falhas (Rate Limiter e Bulkhead).
 *   **JUnit 5 & Mockito**: Testes unitários.
 
 ## 🛠️ Configuração e Execução
@@ -59,7 +59,8 @@ O projeto segue uma arquitetura em camadas (Clean Architecture/Hexagonal simplif
 *   **Virtual Threads**: O projeto está configurado para utilizar Virtual Threads (Java 21+), proporcionando alta escalabilidade para operações de I/O.
 *   **Performance de Banco de Dados**: O Hibernate está configurado para realizar *batch inserts* e *updates*, otimizando a performance em operações de escrita em lote.
 *   **Distributed Tracing**: A aplicação suporta rastreamento distribuído, propagando e mantendo o `traceId` recebido de clientes (ex: `insurance-service`) para facilitar a observabilidade e debug em arquiteturas de microsserviços.
-*   **Rate Limiter**: Controle de vazão da API, limitando em 50 RPS para operações de leitura (com fail-fast) e 10 RPS para operações de escrita com janela de espera de 2s, retornando HTTP 429.
+*   **Rate Limiter**: Controle de vazão da API, limitando operações de leitura e de escrita com janela de espera de 1s, retornando HTTP 429 em caso de sobrecarga.
+*   **Bulkhead**: Limite de concorrência para isolar recursos, protegendo o pool de conexões contra saturação e garantindo estabilidade sob carga.
 
 ## 🗄️ Banco de Dados
 

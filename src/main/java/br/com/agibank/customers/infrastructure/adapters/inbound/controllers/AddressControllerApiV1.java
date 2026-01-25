@@ -4,6 +4,7 @@ import br.com.agibank.customers.api.v1.AddressApiV1;
 import br.com.agibank.customers.api.v1.model.AddressResponseDTO;
 import br.com.agibank.customers.api.v1.model.UpdateAddressRequestDTO;
 import br.com.agibank.customers.application.usecases.address.UpdateAddressByIdUseCase;
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ public class AddressControllerApiV1 implements AddressApiV1 {
 
     @Override
     @RateLimiter(name = CUSTOMERS_WRITE)
+    @Bulkhead(name = CUSTOMERS_WRITE)
     public ResponseEntity<AddressResponseDTO> updateAddressById(final Long addressId,
                                                                 final UpdateAddressRequestDTO updateAddressRequestDTO) {
         return ResponseEntity.ok(updateAddressByIdUseCase.execute(addressId, updateAddressRequestDTO));
