@@ -29,7 +29,7 @@ jobs:
           { echo "pull_request_diff<<EOF"; cat "diff.txt"; echo 'EOF'; } >> $GITHUB_OUTPUT
 
       - name: "Gemini AI Reviewer"
-        uses: raandree/gemini-review-action@v2
+        uses: petarzarkov/gemini-code-review-action@latest
         id: review
         with:
           gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
