@@ -15,33 +15,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: "Get diff of the pull request"
-        id: get_diff
-        shell: bash
-        env:
-          PULL_REQUEST_HEAD_REF: "${{ github.event.pull_request.head.ref }}"
-          PULL_REQUEST_BASE_REF: "${{ github.event.pull_request.base.ref }}"
-        run: |-
-          git fetch origin "${{ env.PULL_REQUEST_HEAD_REF }}"
-          git fetch origin "${{ env.PULL_REQUEST_BASE_REF }}"
-          git checkout "${{ env.PULL_REQUEST_HEAD_REF }}"
-          git diff "origin/${{ env.PULL_REQUEST_BASE_REF }}" > "diff.txt"
-          { echo "pull_request_diff<<EOF"; cat "diff.txt"; echo 'EOF'; } >> $GITHUB_OUTPUT
-
-      - name: "Gemini AI Reviewer"
+      - name: "Run AI Code Review"
         uses: petarzarkov/gemini-code-review-action@latest
-        id: review
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_repository: ${{ github.repository }}
-          github_pull_request_number: ${{ github.event.pull_request.number }}
-          git_commit_hash: ${{ github.event.pull_request.head.sha }}
           model: "gemini-2.5-flash"
-          pull_request_diff: |-
-            ${{ steps.get_diff.outputs.pull_request_diff }}
-          extra_prompt: |-
-            Você é um arquiteto Java focado em performance, Clean Code e SOLID. Analise o diff e sugira melhorias. 
-            Seja conciso, técnico e assertivo. Analise o código buscando gargalos de I/O, problemas de concorrência e uso eficiente de memória.
-            Sempre responda em português brasileiro!
-          log_level: "INFO"
