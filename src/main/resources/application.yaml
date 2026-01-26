@@ -12,9 +12,9 @@ spring:
     driver-class-name: org.postgresql.Driver
     hikari:
       transaction-isolation: TRANSACTION_READ_COMMITTED
-      maximum-pool-size: 80
-      minimum-idle: 70
-      connection-timeout: 30000
+      maximum-pool-size: 80000
+      minimum-idle: 70000
+      connection-timeout: 30000000
       idle-timeout: 600000
       leak-detection-threshold: 4000
       max-lifetime: 1800000
@@ -43,19 +43,19 @@ resilience4j:
     instances:
       customers-read:
         baseConfig: default
-        maxConcurrentCalls: 40
+        maxConcurrentCalls: 400000
       customers-write:
         baseConfig: default
-        maxConcurrentCalls: 40
+        maxConcurrentCalls: 4000000
   ratelimiter:
     instances:
       customers-read:
         limitForPeriod: 1500
-        limitRefreshPeriod: 1s
+        limitRefreshPeriod: 100000s
         timeoutDuration: 0s
       customers-write:
         limitForPeriod: 1500
-        limitRefreshPeriod: 1s
+        limitRefreshPeriod: 100000s
         timeoutDuration: 0s
 
 management:

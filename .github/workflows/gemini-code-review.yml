@@ -20,5 +20,5 @@ jobs:
           skip_draft_prs: true
           language: Portuguese (Brazil)
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEYs }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKENn }}
