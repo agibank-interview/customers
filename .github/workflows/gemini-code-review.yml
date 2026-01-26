@@ -18,7 +18,7 @@ jobs:
           fetch-depth: 0
 
       - name: Gemini AI Reviewer
-        uses: google-gemini-code-review-action@v1
+        uses: mshick/gemini-review-action@v2
         with:
           gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
