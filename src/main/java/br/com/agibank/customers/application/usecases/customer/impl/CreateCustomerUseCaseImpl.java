@@ -35,7 +35,7 @@ public class CreateCustomerUseCaseImpl implements CreateCustomerUseCase {
         final CustomerEntity customerEntity = customerMapper.toCustomerEntity(customerRequestDTO);
         final CustomerResponseDTO response = customerMapper.toCustomerResponseDTO(customerRepository.save(customerEntity));
 
-        log.info("Customer created");
+        log.info("Customer created with id: {}", response.getId());
         return response;
     }
 }
