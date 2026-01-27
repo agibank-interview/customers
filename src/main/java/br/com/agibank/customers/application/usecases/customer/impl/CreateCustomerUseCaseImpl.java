@@ -25,6 +25,7 @@ public class CreateCustomerUseCaseImpl implements CreateCustomerUseCase {
     @Transactional
     public CustomerResponseDTO execute(final CustomerRequestDTO customerRequestDTO) {
         log.info("Creating customer");
+
         if (customerRepository.existsByCpf(customerRequestDTO.getCpf())) {
             throw new CpfAlreadyInUseException(customerRequestDTO.getCpf());
         }
@@ -32,6 +33,9 @@ public class CreateCustomerUseCaseImpl implements CreateCustomerUseCase {
             throw new EmailAlreadyInUseException(customerRequestDTO.getEmail());
         }
         final CustomerEntity customerEntity = customerMapper.toCustomerEntity(customerRequestDTO);
-        return customerMapper.toCustomerResponseDTO(customerRepository.save(customerEntity));
+        final CustomerResponseDTO response = customerMapper.toCustomerResponseDTO(customerRepository.save(customerEntity));
+
+        log.info("Customer created with id: {}", response.getId());
+        return response;
     }
 }

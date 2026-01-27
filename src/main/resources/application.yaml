@@ -12,9 +12,11 @@ spring:
     driver-class-name: org.postgresql.Driver
     hikari:
       transaction-isolation: TRANSACTION_READ_COMMITTED
-      maximum-pool-size: 15
-      minimum-idle: 5
-      connection-timeout: 5000
+      maximum-pool-size: 80
+      minimum-idle: 70
+      connection-timeout: 30000
+      idle-timeout: 600000
+      leak-detection-threshold: 4000
       max-lifetime: 1800000
       pool-name: HikariPool-Customer-API
 
@@ -34,16 +36,27 @@ spring:
     locations: classpath:db/migration
 
 resilience4j:
+  bulkhead:
+    configs:
+      default:
+        maxWaitDuration: 0
+    instances:
+      customers-read:
+        baseConfig: default
+        maxConcurrentCalls: 40
+      customers-write:
+        baseConfig: default
+        maxConcurrentCalls: 40
   ratelimiter:
     instances:
       customers-read:
-        limitForPeriod: 50
+        limitForPeriod: 1500
         limitRefreshPeriod: 1s
-        timeoutDuration: 0
+        timeoutDuration: 0s
       customers-write:
-        limitForPeriod: 10
+        limitForPeriod: 1500
         limitRefreshPeriod: 1s
-        timeoutDuration: 1s
+        timeoutDuration: 0s
 
 management:
   tracing:

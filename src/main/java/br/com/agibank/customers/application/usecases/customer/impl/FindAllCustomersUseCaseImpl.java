@@ -27,8 +27,12 @@ public class FindAllCustomersUseCaseImpl implements FindAllCustomersUseCase {
                                             final Integer size,
                                             final String sort) {
         log.info("Finding all customers with page: {}, size: {}, sort: {}", page, size, sort);
+
         final String[] splitSort = sort.split(",");
-        return customerMapper.toPagedCustomerResponseDTO(customerRepository.findAll(
+        final PagedCustomerResponseDTO response = customerMapper.toPagedCustomerResponseDTO(customerRepository.findAll(
                 of(page, size, by(valueOf(splitSort[1].toUpperCase()), splitSort[0].toLowerCase()))));
+
+        log.info("All customers found. Total pages: {}, Total items: {}", response.getTotalPages(), response.getTotalItems());
+        return response;
     }
 }

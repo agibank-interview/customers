@@ -22,7 +22,11 @@ public class FindCustomerByIdUseCaseImpl implements FindCustomerByIdUseCase {
     @Transactional(readOnly = true)
     public CustomerResponseDTO execute(final Long customerId) {
         log.info("Finding customer with id: {}", customerId);
-        return customerMapper.toCustomerResponseDTO(customerRepository.findWithAddressesById(customerId)
+
+        final CustomerResponseDTO response = customerMapper.toCustomerResponseDTO(customerRepository.findWithAddressesById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException(customerId)));
+
+        log.info("Customer found with id: {}", customerId);
+        return response;
     }
 }

@@ -25,9 +25,13 @@ public class UpdateAddressByIdUseCaseImpl implements UpdateAddressByIdUseCase {
     public AddressResponseDTO execute(final Long addressId,
                                       final UpdateAddressRequestDTO updateAddressRequestDTO) {
         log.info("Updating address with id: {}", addressId);
+
         final AddressEntity addressEntity =
                 addressRepository.findById(addressId).orElseThrow(() -> new AddressNotFoundException(addressId));
         addressMapper.fromUpdateAddressRequestDTO(updateAddressRequestDTO, addressEntity);
-        return addressMapper.toAddressResponseDTO(addressRepository.save(addressEntity));
+        final AddressResponseDTO response = addressMapper.toAddressResponseDTO(addressRepository.save(addressEntity));
+
+        log.info("Address updated with id: {}", addressId);
+        return response;
     }
 }
